@@ -1,0 +1,40 @@
+<ion-content padding class="transparent-header" [ngStyle]="{'background-image': 'url(' + backgroundImage +')'}">
+    <ion-header>
+      <ion-navbar>
+      </ion-navbar>
+    </ion-header>
+    <div padding>
+      <ion-row>
+        <ion-col>
+          <img class="logo" src="assets/img/logo/logo-mailchimp.png" />
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-list inset class="no-border">
+            <ion-item>
+              <ion-label>账号</ion-label>
+              <ion-input type="text" [(ngModel)]="loginForm.userName"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label>密码</ion-label>
+              <ion-input type="password" [(ngModel)]="loginForm.password"></ion-input>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <button ion-button class="login-button" (click)="login()">Login</button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <div (click)="goToSignup()">
+            <span style="cursor:pointer" (click)="openRegister()">Or create a new account.</span>
+          </div>
+        </ion-col>
+      </ion-row>
+    </div>
+  </ion-content>
+  
