@@ -1,10 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpModule,Http } from '@angular/http';
-
-
-declare var $:any;
+import { HttpModule } from '@angular/http';
 
 @NgModule({
     declarations: [ 
