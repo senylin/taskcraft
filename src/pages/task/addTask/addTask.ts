@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage,App,MenuController,NavController, NavParams } from 'ionic-angular';
-import { LoginPage } from '../login/login';
-import { AddTaskPage } from './addTask/addTask';
+import { LoginPage } from '../../login/login';
 
 /**
  * Generated class for the TaskPage page.
@@ -12,15 +11,15 @@ import { AddTaskPage } from './addTask/addTask';
 
 @IonicPage()
 @Component({
-  selector: 'page-task',
-  templateUrl: 'task.html',
+  selector: 'page-addTask',
+  templateUrl: 'addTask.html',
 })
-export class TaskPage {
+export class AddTaskPage {
   selectedSegment: any = 'home'
   segmentList: any = [
     {
-      Name: 'person',
-      title: 'person'
+      Name: 'home',
+      title: 'home'
     },
     {
       Name: 'work',
@@ -73,18 +72,5 @@ export class TaskPage {
   }
   selectedFriends(val: any) {
     console.log(this.selectedSegment, val)
-  }
-  finish(val: any) {
-    console.log(val)
-  }
-  edit(val: any) {
-    console.log(val)
-  }
-  delete(val: any) {
-    console.log(val)
-  }
-  addTask() {
-    console.log(111)
-    this.navCtrl.push(AddTaskPage);
   }
 }

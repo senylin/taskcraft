@@ -12,7 +12,6 @@
     <ion-title>
       Task
     </ion-title>
-
     <ion-buttons end>
       <button ion-button icon-only class="settings" (click)="openLogin()">
         <ion-icon name="settings"></ion-icon>
@@ -21,41 +20,55 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding>
+  <ion-segment [(ngModel)]="selectedSegment" color="primary">
+    <ion-segment-button *ngFor="let tab of segmentList, let i = index" [value]="tab.title"
+                        (ionSelect)="selectedFriends(i)">
+      {{tab.Name}}
+    </ion-segment-button>
+  </ion-segment>
   <ion-toolbar no-border-top>
     <ion-searchbar color="primary"
                   [(ngModel)]="queryText"
-                  
                   placeholder="请输入关键字查找任务">
     </ion-searchbar>
-   </ion-toolbar>
-   <ion-list>
-    <ion-item>
-      <ion-avatar item-start>
-        12
-      </ion-avatar>
-      <h2>Don't Know What To Do!</h2>
-      <p>I've had a pretty messed up day. If we just...</p>
+  </ion-toolbar>
+  <!-- <ion-list>
+    <ion-item class="item-ribbon" *ngFor="let item of taskList">
+      <span class="ribbon cruzeiro">
+        <span>Ionic</span>
+      </span>
+      <ion-icon [name]="item.icon" item-start color="primary"></ion-icon>
+      <ion-label>{{item.title}}</ion-label>
     </ion-item>
-    <ion-item>
-      <ion-avatar item-start>
-        12
-      </ion-avatar>
-      <h2>Don't Know What To Do!</h2>
-      <p>I've had a pretty messed up day. If we just...</p>
-    </ion-item>
-    <ion-item>
-      <ion-avatar item-start>
-        12
-      </ion-avatar>
-      <h2>Don't Know What To Do!</h2>
-      <p>I've had a pretty messed up day. If we just...</p>
-    </ion-item>
-    <ion-item>
-      <ion-avatar item-start>
-        15
-      </ion-avatar>
-      <h2>Don't Know What To Do!</h2>
-      <p>I've had a pretty messed up day. If we just...</p>
-    </ion-item>
+  </ion-list> -->
+  <ion-list>
+    <ion-item-sliding *ngFor="let item of taskList">
+      <ion-item>
+          <ion-icon [name]="item.icon" item-start color="primary"></ion-icon>
+        <h2>{{item.title}}</h2>
+      </ion-item>
+      <ion-item-options side="right">
+      <button ion-button color="secondary" (click)="finish(item)">
+        <!-- <ion-icon name="chatbubbles"></ion-icon> -->
+        完成
+      </button>
+      <button ion-button color="primary" (click)="edit(item)">
+        <!-- <ion-icon name="contacts"></ion-icon> -->
+        修改
+      </button>
+      <button ion-button color="danger" (click)="delete(item)">
+        <!-- <ion-icon name="trash"></ion-icon> -->
+        删除
+      </button>
+      </ion-item-options>
+    </ion-item-sliding>
+    <button ion-item>
+      <ion-icon name="link" item-start color="primary"></ion-icon>
+      <ion-label>已完成任務</ion-label>
+      <ion-note item-end>Off</ion-note>
+    </button>
+  </ion-list>
+  <ion-list>
+    <button ion-button color="secondary" block outline (click)="addTask()">添加任务</button>
   </ion-list>
 </ion-content>

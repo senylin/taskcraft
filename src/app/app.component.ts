@@ -11,6 +11,12 @@ import { LoginPage } from '../pages/login/login';
 })
 export class MyApp {
   rootPage:any = TabsPage;
+  pages: any = [
+    {
+      icon: 'paw',
+      title: '我的任务链'
+    }
+  ]
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {
@@ -19,5 +25,9 @@ export class MyApp {
       statusBar.styleDefault();
       splashScreen.hide();
     });
+  }
+
+  openPage(page: any) {
+    console.log(page)
   }
 }
