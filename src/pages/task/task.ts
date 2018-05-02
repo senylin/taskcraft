@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
-import { IonicPage,App,MenuController,NavController, NavParams } from 'ionic-angular';
+import { Component, Inject } from '@angular/core';
+import { IonicPage, App, MenuController, NavController, NavParams, AlertController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 import { AddTaskPage } from './addTask/addTask';
+import { FinishTaskPage } from './finishTask/finishTask';
 
 /**
  * Generated class for the TaskPage page.
@@ -16,7 +17,8 @@ import { AddTaskPage } from './addTask/addTask';
   templateUrl: 'task.html',
 })
 export class TaskPage {
-  selectedSegment: any = 'home'
+  selectedSegment: any = 'person'
+  showFinish: boolean = false
   segmentList: any = [
     {
       Name: 'person',
@@ -39,27 +41,22 @@ export class TaskPage {
       title: 'travel'
     }
   ]
-  labs:Object = [];
   taskList: any = [
-    { lab: '家庭', title: '做饭', icon: 'home' },
-    { lab: '家庭', title: '买菜', icon: 'home'},
-    { lab: '家庭', title: '洗鱼', icon: 'home'},
-    { lab: '家庭', title: '泡茶', icon: 'home'},
-    { lab: '家庭', title: '睡觉', icon: 'home'}
   ]
-  constructor(public navCtrl: NavController, public navParams: NavParams,app: App,public menu: MenuController) {
+  taskDoneList: any = [
+  ]
+  queryText: string = ''
+  constructor(public navCtrl: NavController, public navParams: NavParams,app: App, public menu: MenuController, public alertCtrl: AlertController,
+    @Inject('TaskService')public TaskService) {
     menu.enable(true);
-    this.labs = [
-      {
-        name:'hello'
-      },
-      {
-        name:'world'
-      },
-      {
-        name:'peace'
-      }
-    ]
+    this.TaskService.getTaskList({taskType: this.selectedSegment, taskStatus: 'doing'}).subscribe(res => {
+      console.log(res);
+      this.taskList = res.data;
+    });
+    this.TaskService.getTaskList({taskType: this.selectedSegment, taskStatus: 'done'}).subscribe(res => {
+      console.log(res);
+      this.taskDoneList = res.data;
+    });
   }
 
   ionViewDidLoad() {
@@ -71,20 +68,62 @@ export class TaskPage {
   openLogin() {
     this.navCtrl.push(LoginPage);
   }
+  showToggle() {
+    this.showFinish = !this.showFinish;
+  }
+  searchTask() {
+    this.TaskService.getTaskList({taskName: this.queryText,taskType: this.selectedSegment, taskStatus: 'doing'}).subscribe(res => {
+      console.log(res);
+      this.taskList = res.data;
+    });
+    this.TaskService.getTaskList({taskName: this.queryText,taskType: this.selectedSegment, taskStatus: 'done'}).subscribe(res => {
+      console.log(res);
+      this.taskDoneList = res.data;
+    });
+  }
   selectedFriends(val: any) {
-    console.log(this.selectedSegment, val)
+    this.TaskService.getTaskList({taskName: this.queryText,taskType: this.segmentList[val].title, taskStatus: 'doing'}).subscribe(res => {
+      console.log(res);
+      this.taskList = res.data;
+    });
+    this.TaskService.getTaskList({taskName: this.queryText,taskType: this.segmentList[val].title, taskStatus: 'done'}).subscribe(res => {
+      console.log(res);
+      this.taskDoneList = res.data;
+    });
   }
   finish(val: any) {
-    console.log(val)
+    this.navCtrl.push(FinishTaskPage, {
+      task: val
+    });
   }
   edit(val: any) {
-    console.log(val)
+    this.navCtrl.push(AddTaskPage, {
+      task: val
+    });
   }
   delete(val: any) {
-    console.log(val)
+    const alert = this.alertCtrl.create({
+      title: '你确认要删除这个任务吗？',
+      message: '确认删除任务将无法还原',
+      buttons: [
+        {
+          text: '取消',
+          handler: () => {
+            console.log('Disagree clicked');
+          }
+        },
+        {
+          text: '确认',
+          handler: () => {
+            console.log('Agree clicked');
+          }
+        }
+      ]
+    });
+
+    alert.present();
   }
   addTask() {
-    console.log(111)
     this.navCtrl.push(AddTaskPage);
   }
 }

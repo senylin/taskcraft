@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { TaskPage } from './task';
+import { TaskService } from './task.service'
 
 @NgModule({
   declarations: [
@@ -9,5 +10,8 @@ import { TaskPage } from './task';
   imports: [
     IonicPageModule.forChild(TaskPage),
   ],
+  providers:[
+    {provide:'TaskService',useClass:TaskService}
+  ]
 })
 export class TaskPageModule {}

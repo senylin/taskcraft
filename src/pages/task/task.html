@@ -29,7 +29,7 @@
   <ion-toolbar no-border-top>
     <ion-searchbar color="primary"
                   [(ngModel)]="queryText"
-                  placeholder="请输入关键字查找任务">
+                  placeholder="请输入关键字查找任务" (change)="searchTask()">
     </ion-searchbar>
   </ion-toolbar>
   <!-- <ion-list>
@@ -44,8 +44,8 @@
   <ion-list>
     <ion-item-sliding *ngFor="let item of taskList">
       <ion-item>
-          <ion-icon [name]="item.icon" item-start color="primary"></ion-icon>
-        <h2>{{item.title}}</h2>
+          <ion-icon name="brush" item-start color="primary"></ion-icon>
+        <h2>{{item.taskName}}</h2>
       </ion-item>
       <ion-item-options side="right">
       <button ion-button color="secondary" (click)="finish(item)">
@@ -62,11 +62,18 @@
       </button>
       </ion-item-options>
     </ion-item-sliding>
-    <button ion-item>
+    <button ion-item (click)="showToggle()">
       <ion-icon name="link" item-start color="primary"></ion-icon>
       <ion-label>已完成任務</ion-label>
       <ion-note item-end>Off</ion-note>
     </button>
+    <ng-container *ngIf="showFinish">
+      <ion-item *ngFor="let item of taskDoneList">
+        <ion-icon name="ionic" item-start color="primary"></ion-icon>
+        <ion-label>{{item.taskName}}</ion-label>
+        <button ion-button outline item-end>unfinish</button>
+      </ion-item>
+    </ng-container>
   </ion-list>
   <ion-list>
     <button ion-button color="secondary" block outline (click)="addTask()">添加任务</button>

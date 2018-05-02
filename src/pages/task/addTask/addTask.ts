@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
-import { IonicPage,App,MenuController,NavController, NavParams } from 'ionic-angular';
+import { Component, Inject } from '@angular/core';
+import { IonicPage,App,MenuController,NavController, NavParams, AlertController } from 'ionic-angular';
 import { LoginPage } from '../../login/login';
+import { TaskPage } from '../task';
 
 /**
  * Generated class for the TaskPage page.
@@ -15,38 +16,22 @@ import { LoginPage } from '../../login/login';
   templateUrl: 'addTask.html',
 })
 export class AddTaskPage {
-  selectedSegment: any = 'home'
-  segmentList: any = [
-    {
-      Name: 'home',
-      title: 'home'
-    },
-    {
-      Name: 'work',
-      title: 'work'
-    },
-    {
-      Name: 'business',
-      title: 'business'
-    },
-    {
-      Name: 'study',
-      title: 'study'
-    },
-    {
-      Name: 'travel',
-      title: 'travel'
-    }
-  ]
+  isEdit: boolean = false
   labs:Object = [];
-  taskList: any = [
-    { lab: '家庭', title: '做饭', icon: 'home' },
-    { lab: '家庭', title: '买菜', icon: 'home'},
-    { lab: '家庭', title: '洗鱼', icon: 'home'},
-    { lab: '家庭', title: '泡茶', icon: 'home'},
-    { lab: '家庭', title: '睡觉', icon: 'home'}
-  ]
-  constructor(public navCtrl: NavController, public navParams: NavParams,app: App,public menu: MenuController) {
+  taskForm: any = {
+    taskName: '',
+    taskType: '',
+    taskBefore: '',
+    taskLimit: '',
+    taskCondition: '',
+    taskTime: '',
+    taskWarn: false,
+    taskPublic: false,
+    taskPriority: 1
+  }
+  taskList: any = [];
+  constructor(public navCtrl: NavController, public navParams: NavParams,app: App,public menu: MenuController,  public alertCtrl: AlertController,
+    @Inject('TaskService')public TaskService) {
     menu.enable(true);
     this.labs = [
       {
@@ -59,6 +44,11 @@ export class AddTaskPage {
         name:'peace'
       }
     ]
+    if (navParams.get('task')) {
+      console.log(navParams.get('task'))
+      this.taskForm = navParams.get('task');
+      this.isEdit = true;
+    }
   }
 
   ionViewDidLoad() {
@@ -70,7 +60,26 @@ export class AddTaskPage {
   openLogin() {
     this.navCtrl.push(LoginPage);
   }
-  selectedFriends(val: any) {
-    console.log(this.selectedSegment, val)
+  createTask() {
+    this.TaskService.createTask(this.taskForm).subscribe(res => {
+      if(res.data) {
+        const alert = this.alertCtrl.create({
+          title: '添加成功',
+          subTitle: '',
+          buttons: ['Ok']
+        });
+    
+        alert.present();
+        this.navCtrl.push(TaskPage);
+      } else {
+        const alert = this.alertCtrl.create({
+          title: '添加失败',
+          subTitle: '请到后台查询原因!',
+          buttons: ['Ok']
+        });
+    
+        alert.present();
+      }
+    });
   }
 }
