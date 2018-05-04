@@ -74,6 +74,6 @@
         <ion-range min="1" max="4" step="1" snaps="true" color="secondary" [(ngModel)]="taskForm.taskPriority"></ion-range>
       </ion-item>
       <button ion-button block outline *ngIf="!isEdit" (click)="createTask()">确认添加</button>
-      <button ion-button block outline *ngIf="isEdit">确认修改</button>
+      <button ion-button block outline *ngIf="isEdit" (click)="editTask()">确认修改</button>
     </ion-list>
   </ion-content>

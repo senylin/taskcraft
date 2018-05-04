@@ -115,7 +115,10 @@ export class TaskPage {
         {
           text: '确认',
           handler: () => {
-            console.log('Agree clicked');
+            console.log(val)
+            this.TaskService.deleteTask({id: val._id}).subscribe(res => {
+              this.searchTask()
+            })
           }
         }
       ]
@@ -125,5 +128,29 @@ export class TaskPage {
   }
   addTask() {
     this.navCtrl.push(AddTaskPage);
+  }
+  unfinishTask(taskItem) {
+    taskItem.id = taskItem._id;
+    taskItem.taskStatus = 'doing';
+    this.TaskService.editTask(taskItem).subscribe(res => {
+      if(res.data) {
+        const alert = this.alertCtrl.create({
+          title: '任务复原',
+          subTitle: '',
+          buttons: ['Ok']
+        });
+    
+        alert.present();
+        this.navCtrl.push(TaskPage);
+      } else {
+        const alert = this.alertCtrl.create({
+          title: '修改任务失败',
+          subTitle: '请到后台查询原因!',
+          buttons: ['Ok']
+        });
+    
+        alert.present();
+      }
+    });
   }
 }

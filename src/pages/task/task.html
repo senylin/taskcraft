@@ -71,7 +71,7 @@
       <ion-item *ngFor="let item of taskDoneList">
         <ion-icon name="ionic" item-start color="primary"></ion-icon>
         <ion-label>{{item.taskName}}</ion-label>
-        <button ion-button outline item-end>unfinish</button>
+        <button ion-button outline item-end (click)="unfinishTask(item)">unfinish</button>
       </ion-item>
     </ng-container>
   </ion-list>

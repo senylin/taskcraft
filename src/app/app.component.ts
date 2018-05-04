@@ -13,8 +13,12 @@ export class MyApp {
   rootPage:any = TabsPage;
   pages: any = [
     {
-      icon: 'paw',
+      icon: 'git-network',
       title: '我的任务链'
+    },
+    {
+      icon: 'git-merge',
+      title: '我的时间树'
     }
   ]
 

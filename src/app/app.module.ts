@@ -15,6 +15,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { Config } from '../core/config.service'
 import { HttpResponseHandlerService } from '../core/http-response.service'
+// import { NgCalendarModule  } from 'ionic2-calendar';
+import { CalendarModule } from "ion2-calendar";
 @NgModule({
   declarations: [
     MyApp,
@@ -26,6 +28,8 @@ import { HttpResponseHandlerService } from '../core/http-response.service'
     BrowserModule,
     PageModule,
     SharedModule,
+    // NgCalendarModule,
+    CalendarModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],

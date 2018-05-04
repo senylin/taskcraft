@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { TimelinePage } from './timeline';
+import { TodayLinePage } from './todayLine';
 import { CalendarModule } from "ion2-calendar";
 
 @NgModule({
   declarations: [
-    TimelinePage,
+    TodayLinePage,
   ],
   imports: [
     CalendarModule,
-    IonicPageModule.forChild(TimelinePage),
+    IonicPageModule.forChild(TodayLinePage),
   ],
 })
-export class TimelinePageModule {}
+export class TodayLinePageModule {}

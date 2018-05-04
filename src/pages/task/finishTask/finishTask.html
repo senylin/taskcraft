@@ -26,28 +26,28 @@
     </ion-item>
     <ion-item>
       <ion-label>任务标签</ion-label>
-      <ion-note>{{task.taskType}}</ion-note>
+      <ion-label>{{task.taskType}}</ion-label>
     </ion-item>
     <ion-item>
       <ion-label>前置任务</ion-label>
-      <ion-note>{{task.taskBefore}}</ion-note>
+      <ion-label>{{task.taskBefore}}</ion-label>
     </ion-item>
     <ion-item>
       <ion-label>时间限制</ion-label>
-      <ion-note>{{task.taskLimit}}</ion-note>
+      <ion-label>{{task.taskLimit}}</ion-label>
     </ion-item>
     <ion-item>
       <ion-label>完成条件</ion-label>
-      <ion-note>{{task.taskCondition}}</ion-note>
+      <ion-label>{{task.taskCondition}}</ion-label>
     </ion-item>
     <ion-item>
-      <ion-label>完成时间</ion-label>
-      <ion-note>{{task.taskTime}}</ion-note>
+      <ion-label>进行时间</ion-label>
+      <ion-label>{{task.taskCurrentTime}}</ion-label>
     </ion-item>
     <ion-item>
       <ion-label>任务描述</ion-label>
       <ion-input type="text" [(ngModel)] = "task.taskResult"></ion-input>
     </ion-item>
-    <button ion-button block outline *ngIf="!isEdit">确认完成</button>
+    <button ion-button block outline (click)="infinishTask()">确认完成</button>
   </ion-list>
 </ion-content>

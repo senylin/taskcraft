@@ -5,14 +5,37 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar>
-    <ion-title>timeline</ion-title>
+    <button ion-button menuToggle icon-only>
+      <ion-icon name='menu'></ion-icon>
+    </button>
+    <ion-title>
+      Task
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only class="settings" (click)="openLogin()">
+        <ion-icon name="settings"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
-
 </ion-header>
 
 
 <ion-content padding>
-
+  <ion-calendar [(ngModel)]="date"
+    (onChange)="onChange($event)"
+    [options]="options"
+    [type]="'string'"
+    [format]="'YYYY-MM-DD'">
+  </ion-calendar>
+  <ion-list>
+    <button ion-item (click)="toToday()">已部署任务</button>
+    <ng-container>
+      <ion-item *ngFor="let item of taskTodayList">
+        <ion-icon name="ionic" item-start color="primary"></ion-icon>
+        <ion-label>{{item.taskName}}</ion-label>
+        <button ion-button outline item-end (click)="finishTask(item)">unfinish</button>
+      </ion-item>
+    </ng-container>
+  </ion-list>
 </ion-content>

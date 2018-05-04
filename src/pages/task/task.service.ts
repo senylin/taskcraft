@@ -33,4 +33,25 @@ export class TaskService {
       }  
     )
   }
+
+  editTask(request) {
+    return this.http.put(this.Config.baseUrl + 'api/task/'+ request.id , request).map( res => {
+        return this.HttpResponseHandlerService.success(res);
+      },
+      error => {
+        return this.HttpResponseHandlerService.error(error);
+      }  
+    )
+  }
+
+  deleteTask(request, callback) {
+    console.log(request)
+    return this.http.delete(this.Config.baseUrl + 'api/task/'+request.id).map( res => {
+        return this.HttpResponseHandlerService.success(res);
+      },
+      error => {
+        return this.HttpResponseHandlerService.error(error);
+      }  
+    )
+  }
 }

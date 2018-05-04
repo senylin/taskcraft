@@ -18,12 +18,12 @@ export class TabsPage {
       },
       {
         root: 'TimelinePage',
-        tabTitle: ' Timeline',
+        tabTitle: ' WorkTime',
         tabIcon: 'calendar'
       },
       {
         root: AboutPage,
-        tabTitle: ' Platform',
+        tabTitle: ' Assist',
         tabIcon: 'contacts'
       }
     ]

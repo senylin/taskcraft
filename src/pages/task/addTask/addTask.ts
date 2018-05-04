@@ -82,4 +82,27 @@ export class AddTaskPage {
       }
     });
   }
+  editTask() {
+    this.taskForm.id = this.taskForm._id;
+    this.TaskService.editTask(this.taskForm).subscribe(res => {
+      if(res.data) {
+        const alert = this.alertCtrl.create({
+          title: '修改成功',
+          subTitle: '',
+          buttons: ['Ok']
+        });
+    
+        alert.present();
+        this.navCtrl.push(TaskPage);
+      } else {
+        const alert = this.alertCtrl.create({
+          title: '修改失败',
+          subTitle: '请到后台查询原因!',
+          buttons: ['Ok']
+        });
+    
+        alert.present();
+      }
+    });
+  }
 }
