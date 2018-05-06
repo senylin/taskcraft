@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { IonicPage, App, MenuController, NavController, NavParams, AlertController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 import { TodayLinePage } from './todayLine/todayLine';
@@ -24,8 +24,14 @@ export class TimelinePage {
   options: CalendarComponentOptions = {
     from: new Date(2000, 0, 1),
   };
-  constructor(public navCtrl: NavController, public navParams: NavParams,app: App, public menu: MenuController, public alertCtrl: AlertController) {
-    console.log(new Date(new Date().getTime()+8*60*60*1000).toISOString().substr(0,10))
+  constructor(public navCtrl: NavController, public navParams: NavParams,app: App, public menu: MenuController, public alertCtrl: AlertController,
+    @Inject('TaskService') public TaskService, @Inject('TimelineService') public TimelineService) {
+      this.TimelineService.getTimelineList({planDate:this.date}).subscribe(res => {
+        this.taskTodayList = res.data;
+        this.taskTodayList.forEach(data => {
+        })
+        console.log(this.taskTodayList)
+      })
   }
   openLogin() {
     this.navCtrl.push(LoginPage);
@@ -34,8 +40,12 @@ export class TimelinePage {
     console.log('ionViewDidLoad TimelinePage');
   }
   onChange($event) {
-    console.log($event);
-    console.log(this.date)
+    this.TimelineService.getTimelineList({planDate:this.date}).subscribe(res => {
+      this.taskTodayList = res.data;
+      this.taskTodayList.forEach(data => {
+      })
+      console.log(this.taskTodayList)
+    })
   }
   finishTask() {
     console.log(111);

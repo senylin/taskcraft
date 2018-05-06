@@ -80,34 +80,35 @@ export class LoginPage {
     })
   }
   login() {
-    const loading = this.loadingCtrl.create({
-      duration: 500
-    });
+    // const loading = this.loadingCtrl.create({
+    //   duration: 500
+    // });
 
-    loading.onDidDismiss(() => {
-      const alert = this.alertCtrl.create({
-        title: 'Logging!',
-        subTitle: 'Thanks for logging in.',
-        buttons: ['close']
-      });
-      alert.present();
-    });
-    this.LoginService.getUser({
-      userName:this.loginForm.userName
-    },data=>{
-      console.log(data);
-      if(data.data.password === this.loginForm.password){
-        loading.present();
-        this.navCtrl.push(TabsPage);
-      }else{
-        const alert = this.alertCtrl.create({
-          title: 'Error',
-          subTitle: '用户密码错误',
-          buttons: ['close']
-        });
-        alert.present();
-      }
-    })
+    // loading.onDidDismiss(() => {
+    //   const alert = this.alertCtrl.create({
+    //     title: 'Logging!',
+    //     subTitle: 'Thanks for logging in.',
+    //     buttons: ['close']
+    //   });
+    //   alert.present();
+    // });
+    // this.LoginService.getUser({
+    //   userName:this.loginForm.userName
+    // },data=>{
+    //   console.log(data);
+    //   if(data.data.password === this.loginForm.password){
+    //     loading.present();
+    //     this.navCtrl.push(TabsPage);
+    //   }else{
+    //     const alert = this.alertCtrl.create({
+    //       title: 'Error',
+    //       subTitle: '用户密码错误',
+    //       buttons: ['close']
+    //     });
+    //     alert.present();
+    //   }
+    // })
+    this.navCtrl.push(TabsPage);
 
   }
 

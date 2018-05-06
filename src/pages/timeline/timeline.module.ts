@@ -10,6 +10,6 @@ import { CalendarModule } from "ion2-calendar";
   imports: [
     CalendarModule,
     IonicPageModule.forChild(TimelinePage),
-  ],
+  ]
 })
 export class TimelinePageModule {}

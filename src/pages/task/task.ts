@@ -46,7 +46,7 @@ export class TaskPage {
   taskDoneList: any = [
   ]
   queryText: string = ''
-  constructor(public navCtrl: NavController, public navParams: NavParams,app: App, public menu: MenuController, public alertCtrl: AlertController,
+  constructor(public navCtrl: NavController, public navParams: NavParams,app: App, public menu: MenuController, public alertCtrl: AlertController,@Inject('Config')public Config,
     @Inject('TaskService')public TaskService) {
     menu.enable(true);
     this.TaskService.getTaskList({taskType: this.selectedSegment, taskStatus: 'doing'}).subscribe(res => {

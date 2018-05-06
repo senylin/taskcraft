@@ -27,16 +27,16 @@
       <ion-item-sliding *ngFor="let item of dayList">
         <ion-item>
             <ion-icon name="alarm" item-start color="primary"></ion-icon>
-          <ion-label>{{item.time}}</ion-label>
-          <ion-label>{{item.task}}</ion-label>
-          <button ion-button outline item-end (click)="selectSame(item)" *ngIf="item.task===''">get</button>
+          <ion-label>{{item.planHour}}</ion-label>
+          <h2 item-end>{{item.taskName}}</h2>
+          <button ion-button outline item-end (click)="select(item)" *ngIf="item.taskName===''">选择任务</button>
         </ion-item>
-        <ion-item-options side="right">
-        <button ion-button color="secondary" (click)="select(item)">
-          <!-- <ion-icon name="chatbubbles"></ion-icon> -->
+        <!-- <ion-item-options side="right">
+        <button ion-button color="secondary" (click)="select(item)" *ngIf="item.taskName===''" >
+          <ion-icon name="chatbubbles"></ion-icon>
           更换任务
         </button>
-        </ion-item-options>
+        </ion-item-options> -->
       </ion-item-sliding>
     </ion-list>
   </ion-content>

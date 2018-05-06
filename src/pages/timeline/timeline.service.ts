@@ -5,7 +5,7 @@ import { HttpParams } from "@angular/common/http";
 import 'rxjs/Rx';
 import 'rxjs/add/operator/toPromise';
 @Injectable()
-export class TaskService {
+export class TimelineService {
 
   constructor(@Inject('Config')public Config,
   @Inject('HttpResponseHandlerService')public HttpResponseHandlerService,
@@ -13,9 +13,9 @@ export class TaskService {
     // const _this = this
 
   }
-  getTaskList(request,callback){
+  getTimelineList(request,callback){
     console.log(1111,request)
-    return this.http.get(this.Config.baseUrl + 'api/task',{ params: request }).map( res => {
+    return this.http.get(this.Config.baseUrl + 'api/plan',{ params: request }).map( res => {
         return this.HttpResponseHandlerService.success(res);
       },
       error => {
@@ -23,18 +23,9 @@ export class TaskService {
       }
     )
   }
-  getTaskOne(request,callback){
-    console.log(1111,request)
-    return this.http.get(this.Config.baseUrl + 'api/task/' + request.id,{ params: request }).map( res => {
-        return this.HttpResponseHandlerService.success(res);
-      },
-      error => {
-        return this.HttpResponseHandlerService.error(error);
-      }
-    )
-  }
-  createTask(request, callback) {
-    return this.http.post(this.Config.baseUrl + 'api/task', request).map( res => {
+  
+  createTimeline(request, callback) {
+    return this.http.post(this.Config.baseUrl + 'api/plan', request).map( res => {
         return this.HttpResponseHandlerService.success(res);
       },
       error => {
@@ -43,8 +34,8 @@ export class TaskService {
     )
   }
 
-  editTask(request) {
-    return this.http.put(this.Config.baseUrl + 'api/task/'+ request.id , request).map( res => {
+  editTimeline(request) {
+    return this.http.put(this.Config.baseUrl + 'api/plan/'+ request.id , request).map( res => {
         return this.HttpResponseHandlerService.success(res);
       },
       error => {
@@ -53,9 +44,9 @@ export class TaskService {
     )
   }
 
-  deleteTask(request, callback) {
+  deletePlan(request, callback) {
     console.log(request)
-    return this.http.delete(this.Config.baseUrl + 'api/task/'+request.id).map( res => {
+    return this.http.delete(this.Config.baseUrl + 'api/plan/'+request.id).map( res => {
         return this.HttpResponseHandlerService.success(res);
       },
       error => {

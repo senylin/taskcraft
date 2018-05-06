@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,Inject } from '@angular/core';
 import { IonicPage, App, MenuController, NavController, NavParams, AlertController } from 'ionic-angular';
 import { LoginPage } from '../../login/login';
 import {
@@ -20,36 +20,54 @@ export class TodayLinePage {
   date: string;
   today: string;
   dayList: any = [
-    {time:'1:00', task: 'hello'},
-    {time:'2:00', task: ''},
-    {time:'3:00', task: ''},
-    {time:'4:00', task: ''},
-    {time:'5:00', task: ''},
-    {time:'6:00', task: ''},
-    {time:'7:00', task: ''},
-    {time:'8:00', task: ''},
-    {time:'9:00', task: ''},
-    {time:'10:00', task: ''},
-    {time:'11:00', task: ''},
-    {time:'12:00', task: ''},
-    {time:'13:00', task: ''},
-    {time:'14:00', task: ''},
-    {time:'15:00', task: ''},
-    {time:'16:00', task: ''},
-    {time:'18:00', task: ''},
-    {time:'19:00', task: ''},
-    {time:'20:00', task: ''},
-    {time:'21:00', task: ''},
-    {time:'22:00', task: ''},
-    {time:'23:00', task: ''},
-    {time:'24:00', task: ''}
+    {planHour:'1:00', taskName: ''},
+    {planHour:'2:00', taskName: ''},
+    {planHour:'3:00', taskName: ''},
+    {planHour:'4:00', taskName: ''},
+    {planHour:'5:00', taskName: ''},
+    {planHour:'6:00', taskName: ''},
+    {planHour:'7:00', taskName: ''},
+    {planHour:'8:00', taskName: ''},
+    {planHour:'9:00', taskName: ''},
+    {planHour:'10:00', taskName: ''},
+    {planHour:'11:00', taskName: ''},
+    {planHour:'12:00', taskName: ''},
+    {planHour:'13:00', taskName: ''},
+    {planHour:'14:00', taskName: ''},
+    {planHour:'15:00', taskName: ''},
+    {planHour:'16:00', taskName: ''},
+    {planHour:'18:00', taskName: ''},
+    {planHour:'19:00', taskName: ''},
+    {planHour:'20:00', taskName: ''},
+    {planHour:'21:00', taskName: ''},
+    {planHour:'22:00', taskName: ''},
+    {planHour:'23:00', taskName: ''},
+    {planHour:'24:00', taskName: ''}
   ];
   taskTodayList: any = [];
-  constructor(public navCtrl: NavController, public navParams: NavParams,app: App, public menu: MenuController, public alertCtrl: AlertController) {
+  taskList: any = [];
+  constructor(public navCtrl: NavController, public navParams: NavParams,app: App, public menu: MenuController, public alertCtrl: AlertController,
+    @Inject('TimelineService') public TimelineService, @Inject('TaskService') public TaskService) {
     if (navParams.get('today')) {
       console.log(navParams.get('today'))
       this.today = navParams.get('today');
     }
+    this.TaskService.getTaskList({taskStatus: 'doing'}).subscribe(res => {
+      console.log(res);
+      this.taskList = res.data;
+    });
+    // const td = this.today.split('-');
+    this.TimelineService.getTimelineList({planDate:this.today}).subscribe(res => {
+      this.taskTodayList = res.data;
+      this.taskTodayList.forEach(data => {
+        this.dayList.map(day => {
+          if(data.planHour === day.planHour) {
+            return day.taskName = data.taskName;
+          }
+        })
+      })
+      console.log(this.taskTodayList)
+    })
   }
   openLogin() {
     this.navCtrl.push(LoginPage);
@@ -60,57 +78,60 @@ export class TodayLinePage {
   onChange($event) {
     console.log($event);
   }
-  select() {
+  select(item) {
     const alert = this.alertCtrl.create();
-    alert.setTitle('Lightsaber color');
-
+    alert.setTitle('我的任务');
     alert.addInput({
       type: 'radio',
-      label: 'Blue',
-      value: 'blue',
-      checked: true
-    });
-
-    alert.addInput({
-      type: 'radio',
-      label: 'Green',
-      value: 'green'
-    });
-
-    alert.addInput({
-      type: 'radio',
-      label: 'Red',
-      value: 'red'
-    });
-
-    alert.addInput({
-      type: 'radio',
-      label: 'Yellow',
-      value: 'yellow'
-    });
-
-    alert.addInput({
-      type: 'radio',
-      label: 'Purple',
-      value: 'purple'
-    });
-
-    alert.addInput({
-      type: 'radio',
-      label: 'White',
-      value: 'white'
-    });
-
-    alert.addInput({
-      type: 'radio',
-      label: 'Black',
-      value: 'black'
-    });
+      label: '',
+      value: '',
+      checked: false
+    })
+    this.taskList.forEach(data => {
+      alert.addInput({
+        type: 'radio',
+        label: data.taskName,
+        value: data._id,
+        checked: false
+      })
+    })
 
     alert.addButton('Cancel');
     alert.addButton({
       text: 'Ok',
       handler: (data: any) => {
+        console.log(data);
+        if(data) {
+         this.TaskService.getTaskOne({id: data}).subscribe( res => {
+           console.log(this.today.split('-') , item.time)
+          //  const td = this.today.split('-');
+           this.TimelineService.createTimeline({...res.data, planDate:this.today, planHour: item.planHour, planStatus: 'ready', planTask: res.data._id }).subscribe(
+             data => {
+               if(data.data) {
+                  this.TimelineService.getTimelineList({planDate:this.today}).subscribe(res2 => {
+                    this.taskTodayList = res2.data;
+                    this.taskTodayList.forEach(data => {
+                      this.dayList.map(day => {
+                        if(data.planHour === day.planHour) {
+                          return day.taskName = data.taskName;
+                        }
+                      })
+                    })
+                    console.log(this.taskTodayList)
+                  })
+               } else {
+                  const alert = this.alertCtrl.create({
+                    title: 'Error',
+                    subTitle: '创建失败',
+                    buttons: ['close']
+                  });
+                  alert.present();
+               }
+             }
+           )
+           console.log(res)
+         })
+        }
       }
     });
 

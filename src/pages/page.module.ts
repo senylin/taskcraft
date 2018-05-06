@@ -9,6 +9,9 @@ import { FinishTaskPageModule } from '../pages/task/finishTask/finishTask.module
 import { TimelinePageModule } from '../pages/timeline/timeline.module';
 import { TodayLinePageModule } from '../pages/timeline/todayLine/todayLine.module';
 import { CalendarModule } from "ion2-calendar";
+import { TaskService } from './task/task.service';
+import { TimelineService } from './timeline/timeline.service';
+
 
 @NgModule({
   imports: [
@@ -19,6 +22,10 @@ import { CalendarModule } from "ion2-calendar";
     FinishTaskPageModule,
     TodayLinePageModule,
     CalendarModule
+  ],
+  providers:[
+    {provide:'TaskService',useClass:TaskService},
+    {provide:'TimelineService',useClass:TimelineService}
   ]
 })
 export class PageModule {}
