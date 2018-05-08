@@ -31,7 +31,7 @@ export class AddTaskPage {
   }
   taskList: any = [];
   constructor(public navCtrl: NavController, public navParams: NavParams,app: App,public menu: MenuController,  public alertCtrl: AlertController,
-    @Inject('TaskService')public TaskService) {
+    @Inject('Store')public Store,@Inject('TaskService')public TaskService) {
     menu.enable(true);
     this.labs = [
       {
@@ -49,6 +49,10 @@ export class AddTaskPage {
       this.taskForm = navParams.get('task');
       this.isEdit = true;
     }
+    this.TaskService.getTaskList({taskStatus: 'doing'}).subscribe(res => {
+      console.log(res);
+      this.taskList = res.data;
+    });
   }
 
   ionViewDidLoad() {

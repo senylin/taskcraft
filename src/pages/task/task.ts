@@ -21,23 +21,23 @@ export class TaskPage {
   showFinish: boolean = false
   segmentList: any = [
     {
-      Name: 'person',
+      Name: '私人',
       title: 'person'
     },
     {
-      Name: 'work',
+      Name: '工作',
       title: 'work'
     },
     {
-      Name: 'business',
+      Name: '业务',
       title: 'business'
     },
     {
-      Name: 'study',
+      Name: '学习',
       title: 'study'
     },
     {
-      Name: 'travel',
+      Name: '旅行',
       title: 'travel'
     }
   ]
@@ -47,8 +47,9 @@ export class TaskPage {
   ]
   queryText: string = ''
   constructor(public navCtrl: NavController, public navParams: NavParams,app: App, public menu: MenuController, public alertCtrl: AlertController,@Inject('Config')public Config,
-    @Inject('TaskService')public TaskService) {
+    @Inject('Store')public Store,@Inject('TaskService')public TaskService) {
     menu.enable(true);
+    console.log(222,this.Store)
     this.TaskService.getTaskList({taskType: this.selectedSegment, taskStatus: 'doing'}).subscribe(res => {
       console.log(res);
       this.taskList = res.data;
@@ -93,7 +94,8 @@ export class TaskPage {
   }
   finish(val: any) {
     this.navCtrl.push(FinishTaskPage, {
-      task: val
+      task: val,
+      page: 'TaskPage'
     });
   }
   edit(val: any) {

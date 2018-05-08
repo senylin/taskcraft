@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { IonicPage,App,MenuController,NavController, NavParams, AlertController } from 'ionic-angular';
 import { LoginPage } from '../../login/login';
 import { TaskPage } from '../task';
+import { TimelinePage } from '../../timeline/timeline';
 
 /**
  * Generated class for the TaskPage page.
@@ -30,8 +31,10 @@ export class FinishTaskPage {
     taskResult: ''
   }
   taskList: any = [];
+  pageBefore: any = TaskPage;
+  date: any = '';
   constructor(public navCtrl: NavController, public navParams: NavParams,app: App,public menu: MenuController,
-    public alertCtrl: AlertController, @Inject('TaskService')public TaskService) {
+    @Inject('Store')public Store,public alertCtrl: AlertController, @Inject('TaskService')public TaskService) {
     menu.enable(true);
     this.labs = [
       {
@@ -45,9 +48,13 @@ export class FinishTaskPage {
       }
     ]
     if (navParams.get('task')) {
-      console.log(navParams.get('task'))
       this.task = navParams.get('task');
-      console.log(this.task)
+    }
+    if (navParams.get('page') === 'TimelinePage') {
+      this.pageBefore = TimelinePage;
+    }
+    if (navParams.get('date')) {
+      this.date = navParams.get('date');
     }
   }
 
@@ -72,7 +79,9 @@ export class FinishTaskPage {
         });
     
         alert.present();
-        this.navCtrl.push(TaskPage);
+        this.navCtrl.push(this.pageBefore, {
+          date: this.date
+        });
       } else {
         const alert = this.alertCtrl.create({
           title: '修改任务失败',

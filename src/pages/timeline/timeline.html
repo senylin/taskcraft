@@ -10,7 +10,7 @@
       <ion-icon name='menu'></ion-icon>
     </button>
     <ion-title>
-      Task
+      {{Store.person.userName}}
     </ion-title>
     <ion-buttons end>
       <button ion-button icon-only class="settings" (click)="openLogin()">
@@ -29,12 +29,14 @@
     [format]="'YYYY-MM-DD'">
   </ion-calendar>
   <ion-list>
-    <button ion-item (click)="toToday()">部署任务</button>
+    <button ion-item (click)="toToday()"><ion-icon name="checkmark-circle-outline" item-start color="bright"></ion-icon>部署任务</button>
     <ng-container>
       <ion-item *ngFor="let item of taskTodayList">
-        <ion-icon name="ionic" item-start color="primary"></ion-icon>
+        <ion-icon name="star-outline" item-start color="primary" *ngIf="item.taskStatus === 'doing'"></ion-icon>
+        <ion-icon name="radio-button-off" item-start color="secondary" *ngIf="item.taskStatus === 'done'"></ion-icon>
         <ion-label>{{item.taskName}}</ion-label>
-        <button ion-button outline item-end (click)="finishTask(item)">unfinish</button>
+        <button ion-button outline item-end (click)="finishTask(item)" *ngIf="item.taskStatus === 'doing'">完成任务</button>
+        <button ion-button outline item-end (click)="unfinishTask(item)" *ngIf="item.taskStatus === 'done'">恢复任务</button>
       </ion-item>
     </ng-container>
   </ion-list>

@@ -13,17 +13,17 @@ export class TabsPage {
     this.tabRoots = [
       {
         root: 'TaskPage',
-        tabTitle: ' Task',
+        tabTitle: '任务',
         tabIcon: 'list-box'
       },
       {
         root: 'TimelinePage',
-        tabTitle: ' WorkTime',
+        tabTitle: ' 时间',
         tabIcon: 'calendar'
       },
       {
         root: AboutPage,
-        tabTitle: ' Assist',
+        tabTitle: ' 协作',
         tabIcon: 'contacts'
       }
     ]

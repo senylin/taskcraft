@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { IonicPage, App, MenuController, NavController, NavParams, AlertController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 import { TodayLinePage } from './todayLine/todayLine';
+import { FinishTaskPage } from '../task/finishTask/finishTask'
 import {
   CalendarComponentOptions
 } from 'ion2-calendar'
@@ -24,12 +25,31 @@ export class TimelinePage {
   options: CalendarComponentOptions = {
     from: new Date(2000, 0, 1),
   };
+  taskList: any = [];
   constructor(public navCtrl: NavController, public navParams: NavParams,app: App, public menu: MenuController, public alertCtrl: AlertController,
-    @Inject('TaskService') public TaskService, @Inject('TimelineService') public TimelineService) {
+    @Inject('Store')public Store,@Inject('TaskService') public TaskService, @Inject('TimelineService') public TimelineService) {
+      console.log(navParams.get('date'))
+      if (navParams.get('date')) {
+        this.date = navParams.get('date');
+      }
+      this.TaskService.getTaskList({}).subscribe(res => {
+        console.log(res);
+        this.taskList = res.data;
+      });
       this.TimelineService.getTimelineList({planDate:this.date}).subscribe(res => {
-        this.taskTodayList = res.data;
-        this.taskTodayList.forEach(data => {
+        this.taskTodayList = [];
+        this.taskList.forEach( task => {
+          let exist = 0;
+          res.data.forEach( plan => {
+            if (plan.planTask === task._id) {
+              exist += 1;
+            }
+          })
+          if (exist) {
+            this.taskTodayList.push(task)
+          }
         })
+        // this.taskTodayList = res.data;
         console.log(this.taskTodayList)
       })
   }
@@ -41,14 +61,60 @@ export class TimelinePage {
   }
   onChange($event) {
     this.TimelineService.getTimelineList({planDate:this.date}).subscribe(res => {
-      this.taskTodayList = res.data;
-      this.taskTodayList.forEach(data => {
+      this.taskTodayList = [];
+      this.taskList.forEach( task => {
+        let exist = false;
+        res.data.forEach( plan => {
+          if (plan.planTask === task._id) {
+            exist = true;
+          }
+        })
+        if (exist) {
+          this.taskTodayList.push(task)
+        }
       })
+      // this.taskTodayList = res.data;
       console.log(this.taskTodayList)
     })
   }
-  finishTask() {
-    console.log(111);
+  finishTask(item) {
+    // let val = {};
+    // this.taskList.forEach(data => {
+    //   if (item.planTask == data._id) {
+    //     val = data;
+    //   }
+    // })
+    this.navCtrl.push(FinishTaskPage, {
+      task: item,
+      page: 'TimelinePage',
+      date: this.date
+    });
+  }
+  unfinishTask(taskItem) {
+    taskItem.id = taskItem._id;
+    taskItem.taskStatus = 'doing';
+    this.TaskService.editTask(taskItem).subscribe(res => {
+      if(res.data) {
+        const alert = this.alertCtrl.create({
+          title: '任务复原',
+          subTitle: '',
+          buttons: ['Ok']
+        });
+    
+        alert.present();
+        this.navCtrl.push(TimelinePage, {
+          date: this.date
+        });
+      } else {
+        const alert = this.alertCtrl.create({
+          title: '修改任务失败',
+          subTitle: '请到后台查询原因!',
+          buttons: ['Ok']
+        });
+    
+        alert.present();
+      }
+    });
   }
   toToday() {
     this.navCtrl.push(TodayLinePage, {

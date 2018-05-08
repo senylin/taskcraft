@@ -14,6 +14,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { Config } from '../core/config.service'
+import { Store } from '../core/store.service'
 import { HttpResponseHandlerService } from '../core/http-response.service'
 
 import { CalendarModule } from "ion2-calendar";
@@ -48,6 +49,7 @@ import { CalendarModule } from "ion2-calendar";
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     {provide: 'Config', useClass: Config},
+    {provide: 'Store', useClass: Store},
     {provide: 'HttpResponseHandlerService', useClass: HttpResponseHandlerService},
   ]
 })

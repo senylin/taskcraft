@@ -47,7 +47,7 @@ export class TodayLinePage {
   taskTodayList: any = [];
   taskList: any = [];
   constructor(public navCtrl: NavController, public navParams: NavParams,app: App, public menu: MenuController, public alertCtrl: AlertController,
-    @Inject('TimelineService') public TimelineService, @Inject('TaskService') public TaskService) {
+    @Inject('Store')public Store,@Inject('TimelineService') public TimelineService, @Inject('TaskService') public TaskService) {
     if (navParams.get('today')) {
       console.log(navParams.get('today'))
       this.today = navParams.get('today');

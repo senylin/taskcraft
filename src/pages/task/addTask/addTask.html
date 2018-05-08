@@ -10,7 +10,7 @@
         <ion-icon name='menu'></ion-icon>
       </button>
       <ion-title>
-        Task
+        {{Store.person.userName}}
       </ion-title>
       <ion-buttons end>
         <button ion-button icon-only class="settings" (click)="openLogin()">
@@ -22,11 +22,13 @@
   <ion-content padding>
     <ion-list inset>
       <ion-item>
-        <ion-input id="taskForm.taskName" [(ngModel)]="taskForm.taskName" placeholder="任务简称"></ion-input>
+        <ion-label>任务简称</ion-label>
+        <ion-input item-end id="taskForm.taskName" [(ngModel)]="taskForm.taskName" placeholder=""></ion-input>
       </ion-item>
       <ion-item>
         <ion-label>任务标签</ion-label>
         <ion-select [(ngModel)]="taskForm.taskType">
+          <ion-option value=""></ion-option>
           <ion-option value="person">person</ion-option>
           <ion-option value="work">work</ion-option>
           <ion-option value="business">business</ion-option>
@@ -38,7 +40,7 @@
         <ion-label>前置任务</ion-label>
         <ion-select [(ngModel)]="taskForm.taskBefore">
           <ion-option value=""></ion-option>
-          <!-- <ion-option *ngFor="let option of taskList, let i = index" [value]="option.taskId">{{option.taskName}}</ion-option> -->
+          <ion-option *ngFor="let option of taskList, let i = index" [value]="option.taskId">{{option.taskName}}</ion-option>
         </ion-select>
       </ion-item>
       <ion-item>

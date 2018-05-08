@@ -10,7 +10,7 @@
       <ion-icon name='menu'></ion-icon>
     </button>
     <ion-title>
-      Task
+      {{Store.person.userName}}
     </ion-title>
     <ion-buttons end>
       <button ion-button icon-only class="settings" (click)="openLogin()">
@@ -44,34 +44,32 @@
   <ion-list>
     <ion-item-sliding *ngFor="let item of taskList">
       <ion-item>
-          <ion-icon name="brush" item-start color="primary"></ion-icon>
+          <ion-icon name="star-outline" item-start color="primary"></ion-icon>
         <h2>{{item.taskName}}</h2>
-      </ion-item>
+        <button ion-button outline item-end (click)="finish(item)">完成任务</button>
+      </ion-item> 
       <ion-item-options side="right">
-      <button ion-button color="secondary" (click)="finish(item)">
-        <!-- <ion-icon name="chatbubbles"></ion-icon> -->
-        完成
-      </button>
-      <button ion-button color="primary" (click)="edit(item)">
-        <!-- <ion-icon name="contacts"></ion-icon> -->
-        修改
-      </button>
-      <button ion-button color="danger" (click)="delete(item)">
-        <!-- <ion-icon name="trash"></ion-icon> -->
-        删除
-      </button>
+        <button ion-button color="primary" (click)="edit(item)">
+          <!-- <ion-icon name="contacts"></ion-icon> -->
+          修改
+        </button>
+        <button ion-button color="danger" (click)="delete(item)">
+          <!-- <ion-icon name="trash"></ion-icon> -->
+          删除
+        </button>
       </ion-item-options>
     </ion-item-sliding>
     <button ion-item (click)="showToggle()">
-      <ion-icon name="link" item-start color="primary"></ion-icon>
-      <ion-label>已完成任務</ion-label>
-      <ion-note item-end>Off</ion-note>
+      <ion-icon name="paw" item-start color="secondary"></ion-icon>
+      <h2>已完成任務</h2>
+      <ion-note item-end *ngIf="!showFinish">查看</ion-note>
+      <ion-note item-end *ngIf="showFinish">关闭</ion-note>
     </button>
     <ng-container *ngIf="showFinish">
       <ion-item *ngFor="let item of taskDoneList">
-        <ion-icon name="ionic" item-start color="primary"></ion-icon>
-        <ion-label>{{item.taskName}}</ion-label>
-        <button ion-button outline item-end (click)="unfinishTask(item)">unfinish</button>
+        <ion-icon name="radio-button-off" item-start color="secondary"></ion-icon>
+        <h2>{{item.taskName}}</h2>
+        <button ion-button outline item-end (click)="unfinishTask(item)">恢复任务</button>
       </ion-item>
     </ng-container>
   </ion-list>
