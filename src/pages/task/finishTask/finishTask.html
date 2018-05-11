@@ -22,6 +22,7 @@
 <ion-content padding>
   <ion-list inset>
     <ion-item>
+      <ion-label>任务名称</ion-label>
       <ion-label>{{task.taskName}}</ion-label>
     </ion-item>
     <ion-item>
@@ -45,7 +46,7 @@
       <ion-label>{{task.taskCurrentTime}}</ion-label>
     </ion-item>
     <ion-item>
-      <ion-label>任务描述</ion-label>
+      <ion-label>完结描述</ion-label>
       <ion-input type="text" [(ngModel)] = "task.taskResult"></ion-input>
     </ion-item>
     <button ion-button block outline (click)="infinishTask()">确认完成</button>

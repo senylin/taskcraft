@@ -70,6 +70,7 @@ export class FinishTaskPage {
   infinishTask() {
     this.task.id = this.task._id;
     this.task.taskStatus = 'done';
+    this.task.finishTime = new Date(new Date().getTime()+8*60*60*1000).toISOString().substr(0,10);
     this.TaskService.editTask(this.task).subscribe(res => {
       if(res.data) {
         const alert = this.alertCtrl.create({

@@ -22,7 +22,7 @@ export class TabsPage {
         tabIcon: 'calendar'
       },
       {
-        root: AboutPage,
+        root: 'PlatformPage',
         tabTitle: ' 协作',
         tabIcon: 'contacts'
       }

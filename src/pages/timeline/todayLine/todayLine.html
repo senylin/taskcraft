@@ -23,10 +23,10 @@
   
   <ion-content padding>
     <ion-list>
-      <button ion-item>{{today}}</button>
+      <button ion-item style="color: #999">{{today.split('-')[0] + '年 ' + today.split('-')[1] + '月 ' + today.split('-')[2] + '日'}}</button>
       <ion-item-sliding *ngFor="let item of dayList">
         <ion-item>
-            <ion-icon name="alarm" item-start color="primary"></ion-icon>
+          <ion-icon name="alarm-outline" item-start color="primary"></ion-icon>
           <ion-label>{{item.planHour}}</ion-label>
           <h2 item-end>{{item.taskName}}</h2>
           <button ion-button outline item-end (click)="select(item)" *ngIf="item.taskName===''">选择任务</button>
