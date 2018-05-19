@@ -14,7 +14,7 @@
     </ion-title>
     <ion-buttons end>
       <button ion-button icon-only class="settings" (click)="openLogin()">
-        <ion-icon name="settings"></ion-icon>
+        <ion-icon name="contact"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -35,7 +35,7 @@
         <ion-icon name="star-outline" item-start color="primary" *ngIf="item.taskStatus === 'doing'"></ion-icon>
         <ion-icon name="radio-button-off" item-start color="secondary" *ngIf="item.taskStatus === 'done'"></ion-icon>
         <ion-label>{{item.taskName}}</ion-label>
-        <button ion-button outline item-end (click)="finishTask(item)" *ngIf="item.taskStatus === 'doing'">完成任务</button>
+        <button ion-button outline item-end (click)="finishTask(item)" *ngIf="item.taskStatus === 'doing' && Store.user._id === Store.person._id">完成任务</button>
         <button ion-button outline item-end (click)="unfinishTask(item)" *ngIf="item.taskStatus === 'done'">恢复任务</button>
       </ion-item>
     </ng-container>

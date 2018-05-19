@@ -7,7 +7,7 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class TimelineService {
 
-  constructor(@Inject('Config')public Config,
+  constructor(@Inject('Config')public Config,@Inject('Store')public Store,
   @Inject('HttpResponseHandlerService')public HttpResponseHandlerService,
   private http:Http) { 
     // const _this = this
@@ -15,7 +15,7 @@ export class TimelineService {
   }
   getTimelineList(request,callback){
     console.log(1111,request)
-    return this.http.get(this.Config.baseUrl + 'api/plan',{ params: request }).map( res => {
+    return this.http.get(this.Config.baseUrl + 'api/plan',{ params: {...request, userId: this.Store.person._id} }).map( res => {
         return this.HttpResponseHandlerService.success(res);
       },
       error => {
@@ -25,7 +25,7 @@ export class TimelineService {
   }
   
   createTimeline(request, callback) {
-    return this.http.post(this.Config.baseUrl + 'api/plan', request).map( res => {
+    return this.http.post(this.Config.baseUrl + 'api/plan', {...request, userId: this.Store.person._id, byUserId: this.Store.user._id}).map( res => {
         return this.HttpResponseHandlerService.success(res);
       },
       error => {
@@ -35,7 +35,7 @@ export class TimelineService {
   }
 
   editTimeline(request) {
-    return this.http.put(this.Config.baseUrl + 'api/plan/'+ request.id , request).map( res => {
+    return this.http.put(this.Config.baseUrl + 'api/plan/'+ request.id , {...request, userId: this.Store.person._id, byUserId: this.Store.user._id}).map( res => {
         return this.HttpResponseHandlerService.success(res);
       },
       error => {

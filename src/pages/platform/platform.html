@@ -9,7 +9,7 @@
         </ion-title>
         <ion-buttons end>
           <button ion-button icon-only class="settings" (click)="openLogin()">
-            <ion-icon name="settings"></ion-icon>
+            <ion-icon name="contact"></ion-icon>
           </button>
         </ion-buttons>
       </ion-navbar>
@@ -21,21 +21,21 @@
         <h3 id="profile-name">{{user.name}}</h3>
         <!-- <p>{{user.occupation}} &bull; {{user.location}}</p> -->
         <p class="profile-description">{{user.description}}</p>
-        <button ion-button *ngIf="!following" small color="purple" (click)="follow()">我的协助</button>
+        <button ion-button *ngIf="!following" small color="purple" (click)="activite()">协助者动态</button>
         <!-- <button ion-button *ngIf="following" class="follow-button" small color="purple" (click)="follow()">Following<ion-icon name="checkmark"></ion-icon></button> -->
       </div>
       <hr/>
       <ion-row class="profile-numbers">
-        <ion-col col-4 style="cursor: pointer">
+        <ion-col col-4 style="cursor: pointer" (click)="jumpToTask()">
           <p>未完成任务</p>
           <span>{{user.doingTask}}</span>
         </ion-col>
-        <ion-col col-4 style="cursor: pointer">
+        <ion-col col-4 style="cursor: pointer" (click)="jumpToTime()">
           <p>已完成任务</p>
           <span>{{user.doneTask}}</span>
         </ion-col>
-        <ion-col col-4 style="cursor: pointer">
-          <p>协助人数</p>
+        <ion-col col-4 style="cursor: pointer" (click)="jumpToAssist()" *ngIf="!following">
+          <p>我协助人数</p>
           <span>{{user.assist}}</span>
         </ion-col>
       </ion-row>
@@ -45,7 +45,7 @@
             <ion-avatar item-start>
               <img [src]="user.profileImage">
             </ion-avatar>
-            <h2 class="sticky">{{user.name}}</h2>
+            <h2 class="sticky">已完成: {{taskDone.taskName}}</h2>
             <p>{{taskDone.finishTime}}</p>
           </ion-item>
           <img [src]="taskDone.taskImg" *ngIf="taskDone.taskImg">
@@ -56,14 +56,14 @@
             <ion-col col-4>
               <button ion-button color="purple" clear small icon-left (click)="like(post)">
                 <ion-icon name='thumbs-up'></ion-icon>
-                {{taskDone.finishGood}} Goods
+                {{taskDone.finishGood}} 
               </button>
             </ion-col>
             <ion-col col-5>
-              <!-- <button ion-button no-padding color="purple" clear small icon-left (click)="comment(post)">
+              <button ion-button no-padding color="purple" clear small icon-left (click)="comment(post)">
                   <ion-icon name='text'></ion-icon>
-                  {{post.comments}} Comments
-                </button> -->
+                  {{taskDone.comments}} Comments
+                </button>
             </ion-col>
             <ion-col col-3 align-self-center text-center>
               <p>

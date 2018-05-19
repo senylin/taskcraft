@@ -54,7 +54,8 @@ export class TimelinePage {
       })
   }
   openLogin() {
-    this.navCtrl.push(LoginPage);
+    this.Store.setPerson(this.Store.user);
+    this.navCtrl.popToRoot();
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad TimelinePage');

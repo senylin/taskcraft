@@ -1,0 +1,66 @@
+<!--
+  Generated template for the TaskPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle icon-only>
+      <ion-icon name='menu'></ion-icon>
+    </button>
+    <ion-title>
+      {{Store.person.userName}}
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only class="settings" (click)="openLogin()">
+        <ion-icon name="contact"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+  <ion-toolbar no-border-top>
+    <ion-searchbar color="primary"
+                  [(ngModel)]="queryText"
+                  placeholder="请输入用户名查找协作伙伴" (change)="searchUser()">
+    </ion-searchbar>
+  </ion-toolbar>
+  <ion-list>
+    <button ion-item (click)="showToggle()">
+      <ion-icon name="paw" item-start color="primary"></ion-icon>
+      <h2>查询结果</h2>
+      <ion-note item-end *ngIf="!showSearch">查看</ion-note>
+      <ion-note item-end *ngIf="showSearch">关闭</ion-note>
+    </button>
+    <ng-container *ngFor="let item of searchList">
+      <ion-item *ngIf="showSearch && item._id !== Store.user._id">
+          <ion-icon name="radio-button-off" item-start color="primary"></ion-icon>
+          <h2>{{item.userName}}</h2>
+          <button ion-button outline item-end (click)="assist(item)">申请协作该用户</button>
+      </ion-item>
+    </ng-container>
+    <button ion-item>
+      <ion-icon name="paw" item-start color="primary"></ion-icon>
+      <h2>我协助的用户</h2>
+    </button>
+    <ion-item *ngFor="let item of assistList">
+      <ion-icon name="ios-heart-outline" item-start color="primary"></ion-icon>
+      <h2>{{item.contactedName}}</h2>
+      <button ion-button outline item-end (click)="jumpToPerson(item)">查看用户</button>
+      <button ion-button outline item-end (click)="unAssist(item)">放弃协作</button>
+    </ion-item>
+    <button ion-item>
+      <ion-icon name="paw" item-start color="primary"></ion-icon>
+      <h2>已结束协作</h2>
+    </button>
+    <ion-item *ngFor="let item of assistedList">
+      <ion-icon name="radio-button-off" item-start color="primary"></ion-icon>
+      <h2>{{item.contactedName}}</h2>
+      <button ion-button outline item-end (click)="assist(item)">申请协作该用户</button>
+    </ion-item>
+  </ion-list>
+  <!-- <ion-list>
+    <button ion-button color="secondary" block outline (click)="addTask()">添加任务</button>
+  </ion-list> -->
+</ion-content>

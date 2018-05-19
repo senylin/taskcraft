@@ -13,7 +13,7 @@ import { LoginService } from './login.service';
     LoginPage
   ],
   providers:[
-    {provide:'LoginService',useClass:LoginService}
+    // {provide:'LoginService',useClass:LoginService}
   ]
 })
 

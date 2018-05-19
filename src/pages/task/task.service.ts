@@ -7,7 +7,7 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class TaskService {
 
-  constructor(@Inject('Config')public Config,
+  constructor(@Inject('Config')public Config, @Inject('Store')public Store,
   @Inject('HttpResponseHandlerService')public HttpResponseHandlerService,
   private http:Http) { 
     // const _this = this
@@ -15,7 +15,7 @@ export class TaskService {
   }
   getTaskList(request,callback){
     console.log(1111,request)
-    return this.http.get(this.Config.baseUrl + 'api/task',{ params: request }).map( res => {
+    return this.http.get(this.Config.baseUrl + 'api/task',{ params: { ...request, userId: this.Store.person._id } }).map( res => {
         return this.HttpResponseHandlerService.success(res);
       },
       error => {
@@ -25,7 +25,7 @@ export class TaskService {
   }
   getTaskOne(request,callback){
     console.log(1111,request)
-    return this.http.get(this.Config.baseUrl + 'api/task/' + request.id,{ params: request }).map( res => {
+    return this.http.get(this.Config.baseUrl + 'api/task/' + request.id,{ params: { ...request }}).map( res => {
         return this.HttpResponseHandlerService.success(res);
       },
       error => {
@@ -34,7 +34,7 @@ export class TaskService {
     )
   }
   createTask(request, callback) {
-    return this.http.post(this.Config.baseUrl + 'api/task', request).map( res => {
+    return this.http.post(this.Config.baseUrl + 'api/task', { ...request, userId: this.Store.person._id, byUserId: this.Store.user._id }).map( res => {
         return this.HttpResponseHandlerService.success(res);
       },
       error => {
@@ -44,7 +44,7 @@ export class TaskService {
   }
 
   editTask(request) {
-    return this.http.put(this.Config.baseUrl + 'api/task/'+ request.id , request).map( res => {
+    return this.http.put(this.Config.baseUrl + 'api/task/'+ request.id , { ...request, userId: this.Store.person._id, byUserId: this.Store.user._id }).map( res => {
         return this.HttpResponseHandlerService.success(res);
       },
       error => {

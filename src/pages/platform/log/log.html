@@ -1,0 +1,53 @@
+
+  <ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle icon-only>
+          <ion-icon name='menu'></ion-icon>
+        </button>
+        <ion-title>
+          {{Store.person.userName}}
+        </ion-title>
+        <ion-buttons end>
+          <button ion-button icon-only class="settings" (click)="openLogin()">
+            <ion-icon name="contact"></ion-icon>
+          </button>
+        </ion-buttons>
+      </ion-navbar>
+  </ion-header>
+  <ion-content padding>
+    <div id="posts">
+      <ion-card *ngFor="let log of logList">
+        <ion-item>
+          <ion-avatar item-start>
+            <img [src]="user.profileImage">
+          </ion-avatar>
+          <h2 class="sticky">{{log.userName}}</h2>
+          <p>{{log.time}}</p>
+        </ion-item>
+        <img [src]="log.taskImg" *ngIf="log.taskImg">
+        <ion-card-content>
+          <p>{{log.log}}</p>
+        </ion-card-content>
+        <!-- <ion-row>
+          <ion-col col-4>
+            <button ion-button color="purple" clear small icon-left (click)="like(post)">
+              <ion-icon name='thumbs-up'></ion-icon>
+              {{log.finishGood}} 
+            </button>
+          </ion-col>
+          <ion-col col-5>
+            <button ion-button no-padding color="purple" clear small icon-left (click)="comment(post)">
+                <ion-icon name='text'></ion-icon>
+                {{log.comments}} Comments
+              </button>
+          </ion-col>
+          <ion-col col-3 align-self-center text-center>
+            <p>
+              {{log.taskTime}}
+            </p>
+          </ion-col>
+        </ion-row> -->
+      </ion-card>
+    </div>
+  </ion-content>
+  

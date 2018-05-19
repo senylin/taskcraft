@@ -1,11 +1,12 @@
 import { Injectable ,Inject} from '@angular/core';
 import { InterceptorService } from 'ng2-interceptors';
-
+import { Http, Headers } from '@angular/http';
 declare var $:any;
 @Injectable()
 export class Config {
 
   public baseUrl:any;
+  public headers: any;
   constructor() {
 
     let baseHost = "http://" + window.location.hostname + ":7001";
@@ -15,6 +16,8 @@ export class Config {
     }
     this.baseUrl = baseHost + "/";
 
+    // this.headers = new Headers().set('Content-Type', 'application/x-www-form-urlencoded')
+    // .set('Authorization', 'Basic bXlfYXBwOm15X3NlY3JldA==')
    }
 
 

@@ -14,7 +14,7 @@
       </ion-title>
       <ion-buttons end>
         <button ion-button icon-only class="settings" (click)="openLogin()">
-          <ion-icon name="settings"></ion-icon>
+          <ion-icon name="contact"></ion-icon>
         </button>
       </ion-buttons>
     </ion-navbar>
@@ -28,11 +28,11 @@
       <ion-item>
         <ion-label>任务标签</ion-label>
         <ion-select [(ngModel)]="taskForm.taskType">
-          <ion-option value="person">person</ion-option>
-          <ion-option value="work">work</ion-option>
-          <ion-option value="business">business</ion-option>
-          <ion-option value="study">study</ion-option>
-          <ion-option value="travel">travel</ion-option>
+          <ion-option value="person">私人</ion-option>
+          <ion-option value="work">工作</ion-option>
+          <ion-option value="business">业务</ion-option>
+          <ion-option value="study">学习</ion-option>
+          <ion-option value="travel">旅行</ion-option>
         </ion-select>
       </ion-item>
       <ion-item>

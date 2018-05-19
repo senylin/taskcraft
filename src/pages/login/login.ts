@@ -2,7 +2,9 @@
 import { Component,Inject } from '@angular/core';
 import { AlertController, App, LoadingController, IonicPage, NavController } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
-
+import { TaskPage } from '../task/task';
+import 'rxjs/Rx';
+import 'rxjs/add/operator/toPromise';
 @IonicPage()
 @Component({
   selector: 'page-login',
@@ -101,6 +103,7 @@ export class LoginPage {
         loading.present();
         this.Store.setPerson(data.data);
         this.Store.setUser(data.data);
+        // this.LoginService.postToken({})
         this.navCtrl.push(TabsPage);
       }else{
         const alert = this.alertCtrl.create({
@@ -111,7 +114,7 @@ export class LoginPage {
         alert.present();
       }
     })
-    this.navCtrl.push(TabsPage);
+    // this.navCtrl.push(TabsPage);
 
   }
 

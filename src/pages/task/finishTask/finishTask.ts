@@ -65,7 +65,8 @@ export class FinishTaskPage {
    this.menu.open();
   }
   openLogin() {
-    this.navCtrl.push(LoginPage);
+    this.Store.setPerson(this.Store.user);
+    this.navCtrl.popToRoot();
   }
   infinishTask() {
     this.task.id = this.task._id;
