@@ -12,7 +12,8 @@ export class Config {
     let baseHost = "http://" + window.location.hostname + ":7001";
     
     if(window.location.hostname == "localhost" || window.location.hostname == "127.0.0.1") {
-        baseHost = "http://localhost:7001";
+        baseHost = "http://149.28.102.231";
+        // baseHost = "http://localhost:7001"
     }
     this.baseUrl = baseHost + "/";
 
