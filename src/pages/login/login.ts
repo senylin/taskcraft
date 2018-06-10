@@ -104,6 +104,7 @@ export class LoginPage {
         this.Store.setPerson(data.data);
         this.Store.setUser(data.data);
         // this.LoginService.postToken({})
+        // this.push.onResume('登陆成功')
         this.navCtrl.push(TabsPage);
       }else{
         const alert = this.alertCtrl.create({

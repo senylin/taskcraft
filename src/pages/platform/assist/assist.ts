@@ -76,7 +76,7 @@ export class AssistPage {
             subTitle: '',
             buttons: ['Ok']
           });
-          this.PlatformService.getContactList({contactedStatus: 'contact', contactId: this.Store.user._id}).subscribe(res => {
+          this.PlatformService.getContactList({contactedStatus: 'contact', contactId: this.Store.user._id, contactName: this.Store.user.userName, contact: this.Store}).subscribe(res => {
             console.log(res);
             this.assistList = res.data;
           });
@@ -90,6 +90,7 @@ export class AssistPage {
       this.PlatformService.createContact({
         contactId: this.Store.user._id,
         contactName: this.Store.user.userName,
+        contact: this.Store.user,
         contactedId: val.contactedId ? val.contactedId : val._id,
         contactedName: val.contactedName ? val.contactedName : val.userName 
       }).subscribe( res => {

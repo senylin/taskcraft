@@ -12,13 +12,14 @@ import { PageModule } from '../pages/page.module'
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { Push, PushObject, PushOptions } from '@ionic-native/push';
 
 import { Config } from '../core/config.service'
 import { Store } from '../core/store.service'
 import { HttpResponseHandlerService } from '../core/http-response.service'
 
 import { CalendarModule } from "ion2-calendar";
-
+import { JPush } from 'ionic3-jpush';
 
 
 
@@ -47,6 +48,8 @@ import { CalendarModule } from "ion2-calendar";
   providers: [
     StatusBar,
     SplashScreen,
+    JPush,
+    Push,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     {provide: 'Config', useClass: Config},
     {provide: 'Store', useClass: Store},
